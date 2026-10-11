@@ -36,7 +36,11 @@ Prefer no install? The hosted MCP server at `https://mcp.runemic.com/mcp` needs 
 npm install && npm run build   # out/runemic-mcp.tgz, out/runemic.mcpb
 ```
 
-Releases: bump `version` in `package.json` on `main`; the release workflow builds and publishes both files.
+```sh
+npm test   # the built server against a stand-in API (tests/mock-api.mjs); needs ImageMagick and Poppler
+```
+
+Every push runs the tests. Releases: bump `version` in `package.json` on `main`; the release workflow tests, builds and publishes both files.
 
 ## Licence
 

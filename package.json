@@ -31,7 +31,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "node tests/mcp_test.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.1",
