@@ -30,7 +30,13 @@ const b = path.join(root, ".bundle");
 rmSync(b, { recursive: true, force: true });
 mkdirSync(path.join(b, "server"), { recursive: true });
 copyFileSync(path.join(pkgDir, "dist/runemic-mcp.mjs"), path.join(b, "server/index.mjs"));
-copyFileSync(path.join(root, "assets/icon.png"), path.join(b, "icon.png"));
+// the icon is the Runemic app icon, kept once in runemic/website and served by runemic.com (ICON=<file> to use a local one)
+if (process.env.ICON) copyFileSync(process.env.ICON, path.join(b, "icon.png"));
+else {
+  const r = await fetch("https://runemic.com/assets/brand/icon-512.png");
+  if (!r.ok) throw new Error(`Could not download the icon from runemic.com (HTTP ${r.status}); set ICON=<path to a 512×512 PNG>`);
+  writeFileSync(path.join(b, "icon.png"), Buffer.from(await r.arrayBuffer()));
+}
 writeFileSync(path.join(b, "manifest.json"), JSON.stringify({
   manifest_version: "0.2",
   name: "runemic",
