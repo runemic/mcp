@@ -1,0 +1,41 @@
+{
+  "name": "@runemic/mcp",
+  "version": "1.1.0",
+  "description": "Runemic OCR as a local MCP server: read images, PDFs and folders of pages on your computer from Claude Desktop, Claude Code, Codex, Cursor and other MCP clients.",
+  "type": "module",
+  "bin": {
+    "runemic-mcp": "dist/runemic-mcp.mjs"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "homepage": "https://runemic.com/docs#mcp-local",
+  "keywords": [
+    "mcp",
+    "ocr",
+    "model-context-protocol",
+    "pdf",
+    "arabic",
+    "persian",
+    "urdu",
+    "hindi"
+  ],
+  "author": "Runemic <hello@runemic.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/runemic/mcp"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.1",
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^4.6.5"
+  }
+}

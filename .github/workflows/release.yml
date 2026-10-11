@@ -1,0 +1,27 @@
+# Builds the local MCP server and publishes a GitHub release v<version> with runemic-mcp.tgz and runemic.mcpb, when
+# package.json gets a new version on main (or by hand). runemic.com/mcp/* serves the latest release's files.
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: ["package.json"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build
+        run: npm install --no-audit --no-fund --silent && npm run build
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          V="v$(node -p 'require("./package.json").version')"
+          if gh release view "$V" >/dev/null 2>&1; then echo "::notice::$V already released"; exit 0; fi
+          gh release create "$V" out/runemic-mcp.tgz out/runemic.mcpb --title "Runemic MCP $V" --notes "Local MCP server for Runemic OCR. See the README for setup." --latest
